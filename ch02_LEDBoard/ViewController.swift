@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, SendDataDelegate {
   override func viewDidLoad() {
     spuer.viewDidLoad()
     print("ViewController 뷰가 로드 되었다.")
@@ -27,13 +27,27 @@ class ViewController: UIViewController {
   }
 
   @IBAction func tapCodePresentButton(_ sender: UIButton) {
-    guard let viewController = self.storyboard?.instantiateViewController(identifier: "CodePresentViewController") else {return}
+    guard let viewController = self.storyboard?.instantiateViewController(identifier: "CodePresentViewController") as? CodePresentViewController else {return}
     viewController.modalPresentationStyle = .fullScreen
+    viewController.name = "Young"
+    viewController.delegate = self
     self.present(viewController, animated: true, completion: nil)
   }
 
   @IBAction func tapCodePushButton(_ sender: UIButton) {
-    guard let viewController = self.storyboard?.instantiateViewController(identifier: "CodePushViewController") else {return}
+    guard let viewController = self.storyboard?.instantiateViewController(identifier: "CodePushViewController") as? CodePushViewController else {return}
+    viewController.name = "Young"
     self.navigationController?.pushViewController(viewController, animated: true)
+  }
+
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if let viewController = segue.destination as? SeguePushViewController {
+      viewController.name = "Young"
+    }
+  }
+
+  func sendData(name: String) {
+    self.nameLabel.text = name
+    self.nameLabel.sizeToFit()
   }
 }
