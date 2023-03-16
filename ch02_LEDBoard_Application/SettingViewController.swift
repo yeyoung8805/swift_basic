@@ -41,14 +41,14 @@ class SettingViewController: UIViewController {
   }
 
   private func changeTextColor(color: UIColor) {
-    self.yellowButton.alpha = color == UIColor.yellow? 1: 0.2
-    self.purpleButton.allpha = color == UIColor.purple? 1: 0.2
-    self.greenButton.allpha = color == UIColor.green? 1: 0.2
+    self.yellowButton.alpha = color == UIColor.yellow ? 1: 0.2
+    self.purpleButton.allpha = color == UIColor.purple ? 1: 0.2
+    self.greenButton.allpha = color == UIColor.green ? 1: 0.2
   }
 
   private func changeBackgroundColorButton(color: UIColor) {
-    self.blackButton.alpha = color == UIColor.black? 1: 0.2
-    self.blueButton.allpha = color == UIColor.blue? 1: 0.2
-    self.orangeButton.allpha = color == UIColor.orange? 1: 0.2
+    self.blackButton.alpha = color == UIColor.black ? 1: 0.2
+    self.blueButton.allpha = color == UIColor.blue ? 1: 0.2
+    self.orangeButton.allpha = color == UIColor.orange ? 1: 0.2
   }
 }
