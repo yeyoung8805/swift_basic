@@ -3,6 +3,8 @@ import UIKit
 class ViewController: UIViewController {
 
   @IBOutlet weak var tableView: UITableView!
+  @IBOutlet var editButton: UIBarButtonItem!
+  var doneButton: UIBarButtonItem?
   var tasks = [Task]() {
     didSet {
       selft.saveTasks()
@@ -12,12 +14,21 @@ class ViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTap))
     self.tableView.dataSource = self
+    self.tableView.delegate = self
     self.loadTasks()
   }
 
-  @IBAction func tapEditButton(_ sender: UIBarButtonItem) {
+  @objc func doneButtonTap() {
+    self.navigationItem.leftBarButtonItem = self.editButton
+    self.tableView.setEditing(false, animated: true)
+  }
 
+  @IBAction func tapEditButton(_ sender: UIBarButtonItem) {
+    guard !self.tasks.isEmpty else { return } //비어있으면 수정할 필요가 없기 때문에 비어있지 않을 경우만 수정하게 한다.
+    self.navigationItem.leftBarButtonItem = self.doneButton
+    self.tableView.setEditing(true, animated: true)
   }
 
   @IBAction func tapAddButton(_ sender: UIBarButtonItem) {
@@ -76,6 +87,28 @@ extension ViewController: UITableViewDataSource {
       cell.accessoryType = .none
     }
     return cell
+  }
+
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    //선택한 셀을 삭제
+    self.tasks.remove(at: indexPath.row)
+    tableView.deleteRows(at: [indexPath], with: .automatic)
+
+    if self.tasks.isEmpty {
+      self.doneButtonTap() //모두 삭제 되었으면, 편집모드로 빠져나오게 함.
+    }
+  }
+
+  func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    return true
+  }
+
+  func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    var tasks = self.tasks
+    let task = tasks[sourceIndexPath.row]
+    tasks.remove(at: sourceIndexPath.row) //원래 위치에 있던 할일을 삭제하고
+    tasks.insert(task, at: destinationIndexPath.row) //이동할 위치를 at 으로 넘겨주고
+    self.tasks = tasks //self.tasks에 tasks를 대입하여 재정렬 시켜준다.
   }
 }
 
