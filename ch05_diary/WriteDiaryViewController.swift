@@ -21,7 +21,7 @@ class WriteDiaryViewController: UIViewController {
     self.configureContentsTextView()
     self.configureDatePicker()
     self.configureInputField()
-    self.confirmButton.isEnabled = false //등록 버튼을 처음에 비활성화 되게 한다. 
+    self.confirmButton.isEnabled = false //등록 버튼을 처음에 비활성화 되게 한다.
   }
 
   private func configureContentsTextView() {
@@ -34,7 +34,7 @@ class WriteDiaryViewController: UIViewController {
 
   private func configureDatePicker() {
     self.datePicker.datePickerMode = .date
-    self.datePicker.preferredDatePickerStyle= .wheels
+    self.datePicker.preferredDatePickerStyle = .wheels
     self.datePicker.addTarget(self, action: #selector(datePickerValueDidChange(_:)), for: .valueChanged)
     self.datePicker.locale = Locale(identifier: "ko-KR")
     self.dateTextField.inputView = self.datePicker // inputView 를 클릭하면 키보드가 아닌 DatePicker 가 뜨게 된다.
@@ -77,7 +77,7 @@ class WriteDiaryViewController: UIViewController {
   }
 
   private func validateInputField() {
-    self.confirmButton.isEnabled = !(self.titleTextField.text?.isEmpty ?? true) 
+    self.confirmButton.isEnabled = !(self.titleTextField.text?.isEmpty ?? true)
       && !(self.dateTextField.text?.isEmpty ?? true) && !self.contentsTextView.text.isEmpty //모두 비어있지 않으면 -> confirm 버튼 활성화 시킨다.
   }
 }
