@@ -52,7 +52,7 @@ class DiaryDetailViewController: UIViewController {
     self.configureView()
   }
 
-  @objec func starDiaryNotification(_ notification: Notification) {
+  @objc func starDiaryNotification(_ notification: Notification) {
     guard let starDiary = notification.object as? [String: Any] else { return }
     guard let isStar = starDiary["isStar"] as? Bool else { return }
     guard let uuidString = starDiary["uuidString"] as? String else { return }
@@ -104,7 +104,7 @@ class DiaryDetailViewController: UIViewController {
       object: [
         "diary": self.diary,
         "isStar": self.diary?.isStar ?? false,
-        "uuidString": diary?.uuidString 
+        "uuidString": diary?.uuidString
       ],
       userInfo: nil
     )
@@ -113,5 +113,5 @@ class DiaryDetailViewController: UIViewController {
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
-  
+
 }
