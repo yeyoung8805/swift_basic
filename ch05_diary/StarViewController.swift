@@ -30,11 +30,6 @@ class StarViewController: UIViewController {
     )
   }
 
-  // override viewWillAppear(_ animated: Bool) {
-  //   super.viewWillAppear(animated)
-  //   self.loadStarDiaryList()
-  // }
-
   private func configureCollectionView() {
     self.collectionView.collectionViewLayout = UICollectionViewFlowLayout()
     self.collectionView.contentsInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -60,17 +55,16 @@ class StarViewController: UIViewController {
       guard let date = $0["date"] as? Date else { return nil }
       guard let isStar = $0["isStar"] as? Bool else { return nil }
       return Diary(
-        uuidString: uuidString, 
-        title: title, 
-        contents: contents, 
-        date: date, 
+        uuidString: uuidString,
+        title: title,
+        contents: contents,
+        date: date,
         isStar: isStar)
     }.filter({
       $0.isStar = true
     }).sorted(by: {
       $0.date.compare($1.date) == .orderedDescending
     })
-    // self.collectionView.reloadData()
   }
 
   @objc func editDiaryNotification(_ notification: Notification) {
@@ -88,7 +82,7 @@ class StarViewController: UIViewController {
     guard let diary = starDiary["diary"] as? Diary else { return }
     guard let isStar = starDiary["isStar"] as? Bool else { return }
     guard let uuidString = starDiary["uuidString"] as? IndexPath else { return }
-    
+
     if isStar {
       self.diaryList.append(diary)
       self.diaryList = self.diaryList.sorted(by: {
@@ -134,7 +128,7 @@ extension StarViewController: UICollectionViewDelegateFlowLayout {
 
 extension StarViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    guard let viewController = self.storyboard?.instantiateViewController(identifier: "DiaryDetailViewController") 
+    guard let viewController = self.storyboard?.instantiateViewController(identifier: "DiaryDetailViewController")
       as? DiaryDetailViewController else { return }
     let diary = self.diaryList[indexPath.row]
     viewController.diary = diary

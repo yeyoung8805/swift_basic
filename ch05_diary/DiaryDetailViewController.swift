@@ -1,18 +1,11 @@
 import UIKit
 
-// protocol DiaryDetailViewDelegate: AnyObject {
-//   func didSelectDelete(indexPath: IndexPath)
-//   func didSelectStar(indexPath: IndexPath, isStar: Bool)
-// }
-
 class DiaryDetailViewController: UIViewController {
 
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var contentsTextView: UITextView!
   @IBOutlet weak var dateLabel: UILabel!
   var starButton: UIBarButtonItem?
-
-  // weak var delegate: DiaryDetailViewDelegate?
 
   var diary: Diary?
   var indexPath: IndexPath?
@@ -80,7 +73,6 @@ class DiaryDetailViewController: UIViewController {
 
   @IBAction func tabDeleteButton(_ sender: UIButton) {
     guard let uuidString = self.diary?.uuidString else { return }
-    // self.delegate?.didSelectDelete(indexPath: indexPath)
     NotificationCenter.default.post(
       name: NSNotification.Name("deleteDiary"),
       object: uuidString,
@@ -98,7 +90,6 @@ class DiaryDetailViewController: UIViewController {
       self.starButton?.image = UIImage(systemName: "star.fill")
     }
     self.diary?.isStar = !isStar
-    //self.delegate?.didSelectStar(indexPath: indexPath, isStar: self.diary?.isStar ?? false)
     NotificationCenter.default.post(
       name: NSNotification.Name("starDiary"),
       object: [

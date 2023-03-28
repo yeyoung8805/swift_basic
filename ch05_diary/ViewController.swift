@@ -139,7 +139,6 @@ extension ViewController: UICollectionViewDelegate {
     let diary = self.diaryList[indexPath.row]
     viewController.diary = diary
     viewController.indexPath = indexPath
-    // viewController.delegate = self
     self.navigationController?.pushViewController(viewController, animated: true)
   }
 }
@@ -153,14 +152,3 @@ extension ViewController: WriteDiaryViewDelegate {
     self.collectionView.reloadData()
   }
 }
-
-// extension ViewController: DiaryDetailViewDelegate {
-//   func didSelectDelete(indexPath: IndexPath) {
-//     self.diaryList.remove(at: indexPath.row)
-//     self.collectionView.deleteItems(at: [indexPath])
-//   }
-
-//   func didSelectStar(indexPath: IndexPath, isStar: Bool) {
-//     self.diaryList[indexPath.row].isStar = isStar
-//   }
-// }
